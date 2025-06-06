@@ -1,5 +1,6 @@
 
 import os
+# Install the required packages if not already installed
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 
