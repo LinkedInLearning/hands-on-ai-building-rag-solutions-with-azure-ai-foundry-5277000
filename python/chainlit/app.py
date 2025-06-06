@@ -13,6 +13,7 @@ azure_openai_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
 azure_search_service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT")
 azure_search_service_admin_key = os.getenv("AZURE_SEARCH_ADMIN_KEY")
 azure_search_service_index_name = os.getenv("AZURE_SEARCH_INDEX_NAME")
+azure_search_service_semantic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
 embedding_endpoint =  os.getenv("EMBEDDING_ENDPOINT_URL")
 
 # Initialize Azure OpenAI client with key-based authentication
@@ -32,7 +33,7 @@ def run_rag(chat_prompt):
     Returns:
         str: The generated response from the Azure OpenAI model, augmented with retrieved documents from Azure Search.
 
-    This function sends the chat prompt to the Azure OpenAI chat completion endpoint, using Azure Cognitive Search as a data source
+    This function sends the chat prompt to the Azure OpenAI chat completion endpoint, using Azure AI Search as a data source
     for retrieval-augmented generation. It configures the search parameters, including semantic configuration, vector search, and
     authentication, and returns the model's response.
     """
@@ -55,7 +56,7 @@ def run_rag(chat_prompt):
             "parameters": {
                 "endpoint": azure_search_service_endpoint,
                 "index_name": azure_search_service_index_name,
-                "semantic_configuration": "hikingproductsrag-semantic-configuration",
+                "semantic_configuration": azure_search_service_semantic_config,
                 "query_type": "vector_semantic_hybrid",
                 "fields_mapping": {
                 "content_fields_separator": "\n",
@@ -109,7 +110,7 @@ def add_to_chat_prompt(chat_prompt, role, content):
     return chat_prompt
 
 @cl.on_chat_start
-def on_chat_start():
+async def on_chat_start():
     # Initialize the chat prompt with a system message
     chat_prompt = [
         {
@@ -123,7 +124,7 @@ def on_chat_start():
 @cl.on_message
 async def main(message: cl.Message):
     
-    # Get the system message
+    # Get the chat prompt from the user session
     chat_prompt = cl.user_session.get("chat_prompt")
         
     # Add the user's message to the chat prompt

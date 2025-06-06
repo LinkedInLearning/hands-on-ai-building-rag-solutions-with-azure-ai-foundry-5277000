@@ -13,6 +13,7 @@ azure_openai_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
 azure_search_service_endpoint = os.getenv("AZURE_SEARCH_SERVICE_ENDPOINT")
 azure_search_service_admin_key = os.getenv("AZURE_SEARCH_ADMIN_KEY")
 azure_search_service_index_name = os.getenv("AZURE_SEARCH_INDEX_NAME")
+azure_search_service_semantic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
 embedding_endpoint =  os.getenv("EMBEDDING_ENDPOINT_URL")
 
 # Initialize Azure OpenAI client with key-based authentication
@@ -72,7 +73,7 @@ completion = client.chat.completions.create(
           "parameters": {
             "endpoint": azure_search_service_endpoint,
             "index_name": azure_search_service_index_name,
-            "semantic_configuration": "hikingproductsrag-semantic-configuration",
+            "semantic_configuration": azure_search_service_semantic_config,
             "query_type": "vector_semantic_hybrid",
             "fields_mapping": {
               "content_fields_separator": "\n",
