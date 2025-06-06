@@ -72,7 +72,7 @@ completion = client.chat.completions.create(
           "parameters": {
             "endpoint": azure_search_service_endpoint,
             "index_name": azure_search_service_index_name,
-            "semantic_configuration": "hikingproductsindex01-semantic-configuration",
+            "semantic_configuration": "hikingproductsrag-semantic-configuration",
             "query_type": "vector_semantic_hybrid",
             "fields_mapping": {
               "content_fields_separator": "\n",
