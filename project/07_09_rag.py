@@ -1,4 +1,3 @@
-
 import os
 # Install the required packages if not already installed
 from openai import AzureOpenAI
@@ -91,7 +90,7 @@ completion = client.chat.completions.create(
             "in_scope": True,
             "filter": None,
             "strictness": 3,
-            "top_n_documents": 5,
+            "top_n_documents": 3,
             "authentication": {
               "type": "api_key",
               "key": azure_search_service_admin_key
